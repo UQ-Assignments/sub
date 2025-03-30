@@ -51,7 +51,6 @@ public class GameModel {
         this.level = START_LEVEL;
         this.spawnRate = START_SPAWN_RATE;
         this.ship = new Ship();
-        this.spaceObjects.add(ship);
     }
 
     public Ship getShip() {

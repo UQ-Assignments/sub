@@ -20,7 +20,7 @@ public class GameController {
     private long startTime;
     private UI ui;
     private GameModel model;
-/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * Initializes the game controller with the given UI and Model.
      * Stores the ui, model and start time.
