@@ -133,8 +133,6 @@ public class GameModel {
     }
 
     public void spawnObjects() {
-        int randomNumber = random.nextInt(100);
-
         if (random.nextInt(100) < spawnRate) {
             addObject(new Asteroid(random.nextInt(GAME_WIDTH),0));
         }
