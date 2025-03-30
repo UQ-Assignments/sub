@@ -47,6 +47,10 @@ public class GameController {
         this(ui, new GameModel(ui::log));
     }
 
+    /**
+     * Renders the game state, updating the UI with the current score, health, level, and time survived.
+     * Also, renders all space objects, including the ship.
+     */
     public void renderGame() {
         ui.setStat("Score", String.valueOf(model.getShip().getScore()));
         ui.setStat("Health", String.valueOf(model.getShip().getHealth()));
@@ -57,11 +61,21 @@ public class GameController {
         ui.render(temp);
     }
 
+    /**
+     * Pauses the game, halting the game actions and displaying a pause message in the UI.
+     */
     public void pauseGame() {
         ui.pause();
         ui.log("Game paused.");
     }
 
+    /**
+     * Handles player input, interpreting movement and action commands for the ship.
+     * The input is checked for valid commands (W, A, S, D for movement, F for firing, and P for pausing).
+     * Logs each action and updates the ship's position or performs the relevant action.
+     *
+     * @param input The player input as a string (e.g., "W", "A", "S", "D", "F", "P").
+     */
     public void handlePlayerInput(String input) {
         input = input.toUpperCase(Locale.ROOT);
         if (input.equals("W")) {
@@ -87,7 +101,6 @@ public class GameController {
 
     /**
      * Starts the main game loop.
-     *
      * Passes onTick and handlePlayerInput to ui.onStep and ui.onKey respectively.
      * @provided
      */
@@ -109,13 +122,19 @@ public class GameController {
      * @provided
      */
     public void onTick(int tick) {
-          renderGame(); // Update Visual
-          model.updateGame(tick); // Update GameObjects
-          model.checkCollisions(); // Check for Collisions
-          model.spawnObjects(); // Handles new spawns
-          model.levelUp(); // Level up when score threshold is met
+        renderGame(); // Update Visual
+        model.updateGame(tick); // Update GameObjects
+        model.checkCollisions(); // Check for Collisions
+        model.spawnObjects(); // Handles new spawns
+        model.levelUp(); // Level up when score threshold is met
     }
 
+    /**
+     * Returns the current instance of the GameModel.
+     * This method provides access to the GameModel, which contains the game state and logic.
+     *
+     * @return The current instance of the GameModel.
+     */
     public GameModel getModel() {
         return model;
     }

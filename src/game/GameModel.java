@@ -53,29 +53,51 @@ public class GameModel {
         this.ship = new Ship();
     }
 
+    /**
+     * Returns the current instance of the Ship.
+     * @return The current Ship instance.
+     */
     public Ship getShip() {
         return ship;
     }
 
+
+    /**
+     * Returns the list of SpaceObjects present in the game.
+     * @return A list of SpaceObject instances.
+     */
     public List<SpaceObject> getSpaceObjects() {
         return spaceObjects;
     }
 
+    /**
+     * Returns the current level of the game.
+     * @return The current game level.
+     */
     public int getLevel() {
         return level;
     }
 
+    /**
+     * Adds a SpaceObject to the list of spaceObjects in the game.
+     * @param object The SpaceObject to be added.
+     */
     public void addObject(SpaceObject object) {
         spaceObjects.add(object);
     }
 
+    /**
+     * Updates the game state by processing the tick for each space object and removing those
+     * outside the game bounds.
+     * @param tick The current tick or frame count in the game loop.
+     */
     public void updateGame(int tick) {
-        for (SpaceObject object: spaceObjects) {
+        for (SpaceObject object : spaceObjects) {
             object.tick(tick);
         }
         List<SpaceObject> remainingObjects = new ArrayList<>();
 
-        for (SpaceObject object: spaceObjects) {
+        for (SpaceObject object : spaceObjects) {
             if (object.getY() <= GAME_HEIGHT) {
                 remainingObjects.add(object);
             }
@@ -84,10 +106,15 @@ public class GameModel {
         spaceObjects = remainingObjects;
     }
 
+    /**
+     * Checks for collisions between the ship and other space objects, such as power-ups,
+     * asteroids, and enemies. The appropriate effects are applied and objects are removed if
+     * they collide with the ship or other objects.
+     */
     public void checkCollisions() {
-        List <SpaceObject> toRemove = new ArrayList<>();
+        List<SpaceObject> toRemove = new ArrayList<>();
 
-        for (SpaceObject object: spaceObjects) {
+        for (SpaceObject object : spaceObjects) {
             if (ship.getX() == object.getX() && ship.getY() == object.getY()) {
                 if (object instanceof HealthPowerUp) {
                     ((HealthPowerUp) object).applyEffect(ship);
@@ -112,8 +139,8 @@ public class GameModel {
             }
         }
 
-        for (SpaceObject object1: spaceObjects) {
-            for (SpaceObject object2: spaceObjects) {
+        for (SpaceObject object1 : spaceObjects) {
+            for (SpaceObject object2 : spaceObjects) {
                 if (object1.getX() == object2.getX() && object1.getY() == object2.getY()) {
                     if (object1 instanceof Bullet && object2 instanceof Enemy) {
                         toRemove.add(object1);
@@ -125,6 +152,10 @@ public class GameModel {
         spaceObjects.removeAll(toRemove);
     }
 
+
+    /**
+     * Fires a bullet from the current position of the ship and adds it to the space objects.
+     */
     public void fireBullet() {
 
         Bullet bullet = new Bullet(getShip().getX(), getShip().getY());
@@ -132,14 +163,19 @@ public class GameModel {
         logger.log("Core.Bullet fired!");
     }
 
+
+    /**
+     * Spawns new space objects, such as asteroids, enemies, and power-ups, at random positions
+     * based on spawn rates.
+     */
     public void spawnObjects() {
         if (random.nextInt(100) < spawnRate) {
             addObject(new Asteroid(random.nextInt(GAME_WIDTH),0));
         }
-        if (random.nextInt(100) < spawnRate*ENEMY_SPAWN_RATE) {
+        if (random.nextInt(100) < spawnRate * ENEMY_SPAWN_RATE) {
             addObject(new Enemy(random.nextInt(GAME_WIDTH), 0));
         }
-        if (random.nextInt(100) < spawnRate*POWER_UP_SPAWN_RATE) {
+        if (random.nextInt(100) < spawnRate * POWER_UP_SPAWN_RATE) {
             if (random.nextBoolean()) {
                 addObject(new ShieldPowerUp(random.nextInt(GAME_WIDTH), 0));
             } else {
@@ -149,8 +185,12 @@ public class GameModel {
         //same location as ship?
     }
 
+    /**
+     * Increases the game level if the score threshold for the current level is reached.
+     * It also increases the spawn rate of new objects.
+     */
     public void levelUp() {
-        if (ship.getScore() >= getLevel()*SCORE_THRESHOLD) {
+        if (ship.getScore() >= getLevel() * SCORE_THRESHOLD) {
             spawnRate += SPAWN_RATE_INCREASE;
             level += 1;
         }
