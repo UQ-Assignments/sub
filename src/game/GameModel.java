@@ -170,7 +170,7 @@ public class GameModel {
      */
     public void spawnObjects() {
         if (random.nextInt(100) < spawnRate) {
-            addObject(new Asteroid(random.nextInt(GAME_WIDTH),0));
+            addObject(new Asteroid(random.nextInt(GAME_WIDTH), 0));
         }
         if (random.nextInt(100) < spawnRate * ENEMY_SPAWN_RATE) {
             addObject(new Enemy(random.nextInt(GAME_WIDTH), 0));

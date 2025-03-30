@@ -80,16 +80,20 @@ public class GameController {
         input = input.toUpperCase(Locale.ROOT);
         if (input.equals("W")) {
             model.getShip().move(Direction.UP);
-            ui.log("Core.Ship moved to (" + model.getShip().getX() + ", " + model.getShip().getY() + ")");
+            ui.log("Core.Ship moved to (" + model.getShip().getX() + ", "
+                    + model.getShip().getY() + ")");
         } else if (input.equals("S")) {
             model.getShip().move(Direction.DOWN);
-            ui.log("Core.Ship moved to (" + model.getShip().getX() + ", " + model.getShip().getY() + ")");
+            ui.log("Core.Ship moved to (" + model.getShip().getX() + ", "
+                    + model.getShip().getY() + ")");
         } else if (input.equals("A")) {
             model.getShip().move(Direction.LEFT);
-            ui.log("Core.Ship moved to (" + model.getShip().getX() + ", " + model.getShip().getY() + ")");
+            ui.log("Core.Ship moved to (" + model.getShip().getX() + ", "
+                    + model.getShip().getY() + ")");
         } else if (input.equals("D")) {
             model.getShip().move(Direction.RIGHT);
-            ui.log("Core.Ship moved to (" + model.getShip().getX() + ", " + model.getShip().getY() + ")");
+            ui.log("Core.Ship moved to (" + model.getShip().getX() + ", "
+                    + model.getShip().getY() + ")");
         } else if (input.equals("F")) {
             model.fireBullet();
         } else if (input.equals("P")) {
