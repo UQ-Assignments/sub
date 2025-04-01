@@ -33,25 +33,25 @@ public class GameModel {
     private Logger logger;
     private int spawnRate;
 
-        /**
-         * Models a game, storing and modifying data relevant to the game.
-         * Logger argument should be a method reference to a .log method such as the UI.log method.
-         * Example: Model gameModel = new GameModel(ui::log)
-         * - Instantiates an empty list for storing all SpaceObjects the model needs to track.
-         * - Instantiates the game level with the starting level value.
-         * - Instantiates the game spawn rate with the starting spawn rate.
-         * - Instantiates a new ship.
-         * - Stores reference to the given logger.
-         *
-         * @param logger a functional interface for passing information between classes.
-         */
-        public GameModel(Logger logger) {
-            this.logger = logger;
-            this.spaceObjects = new ArrayList<>();
-            this.level = START_LEVEL;
-            this.spawnRate = START_SPAWN_RATE;
-            this.ship = new Ship();
-        }
+    /**
+     * Models a game, storing and modifying data relevant to the game.
+     * Logger argument should be a method reference to a .log method such as the UI.log method.
+     * Example: Model gameModel = new GameModel(ui::log)
+     * - Instantiates an empty list for storing all SpaceObjects the model needs to track.
+     * - Instantiates the game level with the starting level value.
+     * - Instantiates the game spawn rate with the starting spawn rate.
+     * - Instantiates a new ship.
+     * - Stores reference to the given logger.
+     *
+     * @param logger a functional interface for passing information between classes.
+     */
+    public GameModel(Logger logger) {
+        this.logger = logger;
+        this.spaceObjects = new ArrayList<>();
+        this.level = START_LEVEL;
+        this.spawnRate = START_SPAWN_RATE;
+        this.ship = new Ship();
+    }
 
     /**
      * Returns the current instance of the Ship.
