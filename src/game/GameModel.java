@@ -33,25 +33,25 @@ public class GameModel {
     private Logger logger;
     private int spawnRate;
 
-    /**
-     * Models a game, storing and modifying data relevant to the game.
-     * Logger argument should be a method reference to a .log method such as the UI.log method.
-     * Example: Model gameModel = new GameModel(ui::log)
-     * - Instantiates an empty list for storing all SpaceObjects the model needs to track.
-     * - Instantiates the game level with the starting level value.
-     * - Instantiates the game spawn rate with the starting spawn rate.
-     * - Instantiates a new ship.
-     * - Stores reference to the given logger.
-     *
-     * @param logger a functional interface for passing information between classes.
-     */
-    public GameModel(Logger logger) {
-        this.logger = logger;
-        this.spaceObjects = new ArrayList<>();
-        this.level = START_LEVEL;
-        this.spawnRate = START_SPAWN_RATE;
-        this.ship = new Ship();
-    }
+        /**
+         * Models a game, storing and modifying data relevant to the game.
+         * Logger argument should be a method reference to a .log method such as the UI.log method.
+         * Example: Model gameModel = new GameModel(ui::log)
+         * - Instantiates an empty list for storing all SpaceObjects the model needs to track.
+         * - Instantiates the game level with the starting level value.
+         * - Instantiates the game spawn rate with the starting spawn rate.
+         * - Instantiates a new ship.
+         * - Stores reference to the given logger.
+         *
+         * @param logger a functional interface for passing information between classes.
+         */
+        public GameModel(Logger logger) {
+            this.logger = logger;
+            this.spaceObjects = new ArrayList<>();
+            this.level = START_LEVEL;
+            this.spawnRate = START_SPAWN_RATE;
+            this.ship = new Ship();
+        }
 
     /**
      * Returns the current instance of the Ship.
@@ -67,7 +67,9 @@ public class GameModel {
      * @return A list of SpaceObject instances.
      */
     public List<SpaceObject> getSpaceObjects() {
-        return spaceObjects;
+        List<SpaceObject> temp = new ArrayList<>(spaceObjects);
+        temp.add(ship);
+        return temp;
     }
 
     /**
@@ -170,19 +172,28 @@ public class GameModel {
      */
     public void spawnObjects() {
         if (random.nextInt(100) < spawnRate) {
-            addObject(new Asteroid(random.nextInt(GAME_WIDTH), 0));
-        }
-        if (random.nextInt(100) < spawnRate * ENEMY_SPAWN_RATE) {
-            addObject(new Enemy(random.nextInt(GAME_WIDTH), 0));
-        }
-        if (random.nextInt(100) < spawnRate * POWER_UP_SPAWN_RATE) {
-            if (random.nextBoolean()) {
-                addObject(new ShieldPowerUp(random.nextInt(GAME_WIDTH), 0));
-            } else {
-                addObject(new HealthPowerUp(random.nextInt(GAME_WIDTH), 0));
+            int x = random.nextInt(GAME_WIDTH);
+            if (!(ship.getX() == x && ship.getY() == 0)) {
+                addObject(new Asteroid(x, 0));
             }
         }
-        //same location as ship?
+
+        if (random.nextInt(100) < spawnRate * ENEMY_SPAWN_RATE) {
+            int x = random.nextInt(GAME_WIDTH);
+            if (!(ship.getX() == x && ship.getY() == 0)) {
+                addObject(new Enemy(x, 0));
+            }
+        }
+        if (random.nextInt(100) < spawnRate * POWER_UP_SPAWN_RATE) {
+            int x = random.nextInt(GAME_WIDTH);
+            if (!(ship.getX() == x && ship.getY() == 0)) {
+                if (random.nextBoolean()) {
+                    addObject(new ShieldPowerUp(x, 0));
+                } else {
+                    addObject(new HealthPowerUp(x, 0));
+                }
+            }
+        }
     }
 
     /**
@@ -193,10 +204,10 @@ public class GameModel {
         if (ship.getScore() >= getLevel() * SCORE_THRESHOLD) {
             spawnRate += SPAWN_RATE_INCREASE;
             level += 1;
+            logger.log("Level Up! Welcome to Level " + level
+                    + ". Spawn rate increased to " + spawnRate + "%.");
         }
     }
-
-
 
     /**
      * Sets the seed of the Random instance created in the constructor using .setSeed().

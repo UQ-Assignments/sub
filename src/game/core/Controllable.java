@@ -31,7 +31,7 @@ public abstract class Controllable extends ObjectWithPosition {
         if (direction == Direction.UP) {
             int newY = getY() - 1;
             if (newY < 0) {
-                throw new BoundaryExceededException("Cannot move up z. Out of Bounds!");
+                throw new BoundaryExceededException("Cannot move up. Out of Bounds!");
             } else {
                 this.y += -1;
             }

@@ -4,7 +4,7 @@ import game.ui.ObjectGraphic;
 
 /**
  * Represents an Asteroid, which is a type of DescendingEnemy and
- * by extension is a SpaceObject. The asteroid moves downward
+ * by extension is a SpaceObject. The asteroid m    oves downward
  * and has a graphical representation of a white circle.
  */
 
