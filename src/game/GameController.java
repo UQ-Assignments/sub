@@ -56,7 +56,9 @@ public class GameController {
         ui.setStat("Health", String.valueOf(model.getShip().getHealth()));
         ui.setStat("Level", String.valueOf(model.getLevel()));
         ui.setStat("Time Survived", ((System.currentTimeMillis() - startTime) / 1000) + " seconds");
-        ui.render(model.getSpaceObjects());
+        List<SpaceObject> temp = new ArrayList<>(model.getSpaceObjects());
+        temp.add(model.getShip());
+        ui.render(temp);
     }
 
     /**

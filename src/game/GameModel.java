@@ -67,9 +67,7 @@ public class GameModel {
      * @return A list of SpaceObject instances.
      */
     public List<SpaceObject> getSpaceObjects() {
-        List<SpaceObject> temp = new ArrayList<>(spaceObjects);
-        temp.add(ship);
-        return temp;
+        return spaceObjects;
     }
 
     /**
